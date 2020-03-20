@@ -6,15 +6,11 @@ import Chart from 'chart.js';
 // https://api.github.com/repos/CSSEGISandData/COVID-19/contents/csse_covid_19_data/csse_covid_19_daily_reports/
 
 // Folder
-fetch('https://api.github.com/repos/CSSEGISandData/COVID-19/contents/csse_covid_19_data/csse_covid_19_daily_reports/03-17-2020.csv')
+fetch('https://api.github.com/repos/CSSEGISandData/COVID-19/contents/csse_covid_19_data/csse_covid_19_daily_reports')
     .then(response => response.json())
-    .then(data => data.download_url)
-    .then(u => {
-        console.log(u);
-        return u;
-    })
+    .then(files => files.filter(file => file.name.endsWith('.csv')).map(file => file.download_url))
+    .then(urls => urls[0])
     .then(u => fetchData(u))
-    // .then(console.log)
 
 // data ('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-17-2020.csv')
 const fetchData = (url) => fetch(url).then(res => res.text())
@@ -57,30 +53,14 @@ const ctx = document.getElementById('myChart').getContext('2d');
 
 const newData = {
     labels: labels,
-    // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [{
         label: 'My First dataset',
         backgroundColor: 'red',
         borderColor: 'red',
-        data: data, /* [
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor(),
-            3
-        ],*/
+        data: data,
         fill: false,
-    }/*, {
-        label: 'My Second dataset',
-        fill: false,
-        backgroundColor: 'blue',
-        borderColor: 'blue',
-        data: [
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor()
-        ],
-    }*/]
+        hidden: false,
+    }]
 }
 
 var config = {
@@ -119,15 +99,3 @@ var config = {
     }
 };
 new Chart(ctx, config);
-
-// Chartjs
-
-/*
-data: [{
-    x: 10,
-    y: 20
-}, {
-    x: 15,
-    y: 10
-}]
-*/

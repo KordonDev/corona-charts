@@ -9,8 +9,17 @@
 
 <body>
     <h1>First test</h1>
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <canvas id="myChart" width="1000" height="800"></canvas>
 
+    <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+          // Use the window load event to keep the page load performant
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js');
+          });
+        }
+    </script>
     <script src="./script.js"></script>
 </body>
 
