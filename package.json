@@ -18,6 +18,7 @@
     "@types/chart.js": "^2.9.16",
     "chart.js": "^2.9.3",
     "workbox-expiration": "^5.1.1",
+    "workbox-precaching": "^5.1.1",
     "workbox-routing": "^5.1.1",
     "workbox-strategies": "^5.1.1",
     "workbox-sw": "^5.1.1"

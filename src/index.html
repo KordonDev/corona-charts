@@ -13,10 +13,9 @@
     <h1>My Personal Corona Charts</h1>
     <p>
       First I show the absolute number of cases and afterwards the relative number of cases compared to the day before. <br/>
+      It only takes the top 20 regions into account.<br/>
 
-      No warranties that my calculations and charts are correct, they are only for myself. <br/>
-
-      And sorry no mobile version (until I understand chartjs).
+      No warranties that my calculations and charts are correct, they are only for myself.
     </p>
 
     <p>
@@ -24,14 +23,30 @@
     </p>
 
     <h2>Absolute Cases</h2>
-    <canvas id="absolute-confirmed" width="1000" height="800"></canvas>
-    <canvas id="absolute-recovered" width="1000" height="800"></canvas>
-    <canvas id="absolute-deaths" width="1000" height="800"></canvas>
+
+    <div class="mobile">
+      <canvas id="absolute-confirmed-mobile" width="800" height="1000" ></canvas>
+      <canvas id="absolute-recovered-mobile" width="800" height="1000"></canvas>
+      <canvas id="absolute-deaths-mobile" width="800" height="1000"></canvas>
+    </div>
+    <div class="desktop">
+      <canvas id="absolute-confirmed-desktop" width="1200" height="800" ></canvas>
+      <canvas id="absolute-recovered-desktop" width="1200" height="800"></canvas>
+      <canvas id="absolute-deaths-desktop" width="1200" height="800"></canvas>
+    </div>
 
     <h2>Relative Cases</h2>
-    <canvas id="change-rate-confirmed" width="1000" height="800"></canvas>
-    <canvas id="change-rate-recovered" width="1000" height="800"></canvas>
-    <canvas id="change-rate-deaths" width="1000" height="800"></canvas>
+
+    <div class="mobile">
+      <canvas id="change-rate-confirmed-mobile" width="800" height="1000"></canvas>
+      <canvas id="change-rate-recovered-mobile" width="800" height="1000"></canvas>
+      <canvas id="change-rate-deaths-mobile" width="800" height="1000"></canvas>
+    </div>
+    <div class="desktop">
+      <canvas id="change-rate-confirmed-desktop" width="1200" height="800"></canvas>
+      <canvas id="change-rate-recovered-desktop" width="1200" height="800"></canvas>
+      <canvas id="change-rate-deaths-desktop" width="1200" height="800"></canvas>
+    </div>
 
     <script>
         // Check that service workers are supported

@@ -24,11 +24,17 @@ fetchCsvs()
             .sort((country1, country2) => country1.data[country1.data.length - 1].confirmed - country2.data[country2.data.length - 1].confirmed)
             .slice(-20)
 
-        createChart('Confirmed Cases', top20ConfirmedCountries, confirmedDataMapper, document.getElementById('absolute-confirmed'));
-        createChart('Recovered Cases', top20ConfirmedCountries, recoveredDataMapper, document.getElementById('absolute-recovered'));
-        createChart('Absolute Cases', top20ConfirmedCountries, deathsDataMapper, document.getElementById('absolute-deaths'));
+        createChart('Confirmed Cases', top20ConfirmedCountries, confirmedDataMapper, document.getElementById('absolute-confirmed-desktop'));
+        createChart('Confirmed Cases', top20ConfirmedCountries, confirmedDataMapper, document.getElementById('absolute-confirmed-mobile'));
+        createChart('Recovered Cases', top20ConfirmedCountries, recoveredDataMapper, document.getElementById('absolute-recovered-desktop'));
+        createChart('Recovered Cases', top20ConfirmedCountries, recoveredDataMapper, document.getElementById('absolute-recovered-mobile'));
+        createChart('Deaths Cases', top20ConfirmedCountries, deathsDataMapper, document.getElementById('absolute-deaths-desktop'));
+        createChart('Deaths Cases', top20ConfirmedCountries, deathsDataMapper, document.getElementById('absolute-deaths-mobile'));
 
-        createChart('Confirmed Relative Changed', top20ConfirmedCountries, confirmedRelativeDataMapper, document.getElementById('change-rate-confirmed'));
-        createChart('Recovered Relative Changed', top20ConfirmedCountries, recoveredRelativeDataMapper, document.getElementById('change-rate-recovered'));
-        createChart('Deaths Relative Changed', top20ConfirmedCountries, deathsRelativeDataMapper, document.getElementById('change-rate-deaths'));
+        createChart('Confirmed Relative Changed', top20ConfirmedCountries, confirmedRelativeDataMapper, document.getElementById('change-rate-confirmed-desktop'));
+        createChart('Confirmed Relative Changed', top20ConfirmedCountries, confirmedRelativeDataMapper, document.getElementById('change-rate-confirmed-mobile'));
+        createChart('Recovered Relative Changed', top20ConfirmedCountries, recoveredRelativeDataMapper, document.getElementById('change-rate-recovered-desktop'));
+        createChart('Recovered Relative Changed', top20ConfirmedCountries, recoveredRelativeDataMapper, document.getElementById('change-rate-recovered-mobile'));
+        createChart('Deaths Relative Changed', top20ConfirmedCountries, deathsRelativeDataMapper, document.getElementById('change-rate-deaths-desktop'));
+        createChart('Deaths Relative Changed', top20ConfirmedCountries, deathsRelativeDataMapper, document.getElementById('change-rate-deaths-mobile'));
     });

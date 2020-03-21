@@ -1,9 +1,9 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
 
-import {setCacheNameDetails} from 'workbox-core';
-import {registerRoute} from 'workbox-routing/registerRoute';
-import {CacheFirst } from 'workbox-strategies/CacheFirst';
-import { NetworkFirst } from 'workbox-strategies/NetworkFirst';
+import { setCacheNameDetails } from 'workbox-core';
+import { registerRoute } from 'workbox-routing/registerRoute';
+import { NetworkFirst, CacheFirst} from 'workbox-strategies';
+import {precacheAndRoute} from 'workbox-precaching';
 
 setCacheNameDetails({
   prefix: 'my-app',
@@ -23,3 +23,10 @@ registerRoute(
     cacheName: 'csv',
   }),
 );
+
+registerRoute(/\.(?:js|css)$/, new NetworkFirst());
+
+precacheAndRoute([
+  { url: '/', revision: '383676' },
+  { url: '/index.html', revision: '383676' },
+]);
