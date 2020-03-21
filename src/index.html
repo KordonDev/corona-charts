@@ -4,11 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My charts</title>
+    <title>Corona Charts</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
-    <h1>My Personal Corona Dashboard</h1>
+    <h1>My Personal Corona Charts</h1>
+    <p>
+      First I show the absolute number of cases and afterwards the relative number of cases compared to the day before. <br/>
+
+      No warranties that my calculations and charts are correct, they are only for myself. <br/>
+
+      And sorry no mobile version (until I understand chartjs).
+    </p>
+
+    <p>
+      Data is used from <a href="https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series">CSSEGISandData / COVID-19</a>.
+    </p>
 
     <h2>Absolute Cases</h2>
     <canvas id="absolute-confirmed" width="1000" height="800"></canvas>
