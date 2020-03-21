@@ -2,7 +2,8 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox
 
 import {setCacheNameDetails} from 'workbox-core';
 import {registerRoute} from 'workbox-routing/registerRoute';
-import {CacheFirst} from 'workbox-strategies/CacheFirst';
+import {CacheFirst } from 'workbox-strategies/CacheFirst';
+import { NetworkFirst } from 'workbox-strategies/NetworkFirst';
 
 setCacheNameDetails({
   prefix: 'my-app',
@@ -18,7 +19,7 @@ registerRoute(
 
 registerRoute(
   /\.csv$/,
-  new CacheFirst({
+  new NetworkFirst({
     cacheName: 'csv',
   }),
 );

@@ -1,17 +1,20 @@
 
-export interface CountryData {
+export interface Country {
 	country: string;
-	data: {
-		date: Date;
-		confirmed: number;
-		deaths: number;
-		recovered: number;
-	}[]
+	color: string;
+	data: CountryData[]
+}
+
+export interface CountryData {
+	date: Date;
+	confirmed: number;
+	deaths: number;
+	recovered: number;
 }
 
 // http://techslides.com/convert-csv-to-json-in-javascript
 export function csvToJson(confirmedCSV: string, recoveredCSV: string, deathsCSV: string) {
-	const result: CountryData[] = [];
+	const result: Country[] = [];
 	const confirmedLines = confirmedCSV.split('\n');
 	const recoveredLines = recoveredCSV.split('\n');
 	const deathsLines = deathsCSV.split('\n');
@@ -22,8 +25,9 @@ export function csvToJson(confirmedCSV: string, recoveredCSV: string, deathsCSV:
 		const confirmedCurrentLine = confirmedLines[i].split(',');
 		const recoveredCurrentLine = recoveredLines[i].split(',');
 		const deathsCurrentLine = deathsLines[i].split(',');
-		const countryData: CountryData = {
+		const countryData: Country = {
 			country: confirmedCurrentLine[0] ? `${confirmedCurrentLine[1]} - ${confirmedCurrentLine[0]}` : confirmedCurrentLine[1],
+			color: getRandomColor(),
 			data: []
 		};
 
@@ -39,4 +43,13 @@ export function csvToJson(confirmedCSV: string, recoveredCSV: string, deathsCSV:
 		result.push(countryData);
 	}
 	return result;
+}
+
+const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }
