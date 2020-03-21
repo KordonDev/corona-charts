@@ -13,12 +13,8 @@ fetch('https://api.github.com/repos/CSSEGISandData/COVID-19/contents/csse_covid_
     .then(u => fetchData(u))
 
 // data ('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-17-2020.csv')
-const fetchData = (url) => fetch(url).then(res => res.text())
+const fetchData = (url: string) => fetch(url).then(res => res.text())
 
-// http://techslides.com/convert-csv-to-json-in-javascript
-const convertCsvToJson = (csv) => {
-    return csv;
-}
 
 const sampleData = {
     Germany: [
@@ -49,7 +45,12 @@ const sampleData = {
 
 const labels = sampleData.Germany.map(day => `${day.date.getDate()}.${day.date.getMonth()+1}.`);
 const data = sampleData.Germany.map(day => day.confirmed);
-const ctx = document.getElementById('myChart').getContext('2d');
+const ctx = (document.getElementById('myChart') as HTMLCanvasElement ).getContext('2d');
+
+let el = document.querySelector("#definitelyAnImage");
+if (el instanceof HTMLImageElement) {
+  el.src = "foo.png";
+}
 
 const newData = {
     labels: labels,
