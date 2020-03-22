@@ -13,7 +13,7 @@ const recoveredRelativeDataMapper = (data: CountryData[]) => recoveredDataMapper
 const deathsRelativeDataMapper = (data: CountryData[]) => deathsDataMapper(data).map(toRelativeData);
 
 const toRelativeData = (currentCases: number, index: number, cases: number[]) => {
-    if (index === 0 || cases[index - 1] === 0) return 0;
+    if (index === 0 || cases[index - 1] === 0) return 1;
     return Math.round(currentCases / cases[index - 1] * 1000)/1000;
 };
 
