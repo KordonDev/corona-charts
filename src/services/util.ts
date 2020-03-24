@@ -26,7 +26,7 @@ export function csvToJson(confirmedCSV: string, deathsCSV: string) {
 			continue;
 		}
 		const countryData: Country = {
-			country: confirmedCurrentLine[0] ? `${confirmedCurrentLine[1]} - ${confirmedCurrentLine[0]}` : confirmedCurrentLine[1],
+			country: confirmedCurrentLine[1],
 			color: getRandomColor(),
 			data: []
 		};
@@ -41,7 +41,25 @@ export function csvToJson(confirmedCSV: string, deathsCSV: string) {
 
 		result.push(countryData);
 	}
-	return result;
+	return result.reduce((storedCountries: Country[], currentCountry) => {
+		const existingStoredCountry = storedCountries.find((storedCountry => storedCountry.country === currentCountry.country));
+		if (existingStoredCountry) {
+			return storedCountries.map(country => {
+				if (country.country === currentCountry.country) {
+					return {
+						...country,
+						data: country.data.map(day => ({
+							...day,
+							confirmed: day.confirmed + (currentCountry.data.find(currentCountryDay => currentCountryDay.date === day.date)?.confirmed || 0),
+							deaths: day.deaths + (currentCountry.data.find(currentCountryDay => currentCountryDay.date === day.date)?.deaths || 0),
+						}))
+					}
+				}
+				return country;
+			})
+		}
+		return [ ...storedCountries, currentCountry ];
+	}, []);
 }
 
 const getRandomColor = () => {
