@@ -25,6 +25,9 @@ export function csvToJson(confirmedCSV: string, recoveredCSV: string, deathsCSV:
 		const confirmedCurrentLine = confirmedLines[i].split(',');
 		const recoveredCurrentLine = recoveredLines[i].split(',');
 		const deathsCurrentLine = deathsLines[i].split(',');
+		if (confirmedCurrentLine.length < 5) {
+			continue;
+		}
 		const countryData: Country = {
 			country: confirmedCurrentLine[0] ? `${confirmedCurrentLine[1]} - ${confirmedCurrentLine[0]}` : confirmedCurrentLine[1],
 			color: getRandomColor(),
@@ -34,9 +37,9 @@ export function csvToJson(confirmedCSV: string, recoveredCSV: string, deathsCSV:
 		for (let column = 4; column < confirmedCurrentLine.length; column++) {
 			countryData.data.push({
 				date: new Date(headlines[column]),
-				confirmed: parseInt(confirmedCurrentLine[column]),
-				recovered: parseInt(recoveredCurrentLine[column]),
-				deaths: parseInt(deathsCurrentLine[column])
+				confirmed: parseInt(confirmedCurrentLine[column] || '0'),
+				recovered: parseInt(recoveredCurrentLine[column] || '0'),
+				deaths: parseInt(deathsCurrentLine[column] || '0')
 			});
 		}
 
