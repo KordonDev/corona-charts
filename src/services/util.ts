@@ -9,21 +9,18 @@ export interface CountryData {
 	date: Date;
 	confirmed: number;
 	deaths: number;
-	recovered: number;
 }
 
 // http://techslides.com/convert-csv-to-json-in-javascript
-export function csvToJson(confirmedCSV: string, recoveredCSV: string, deathsCSV: string) {
+export function csvToJson(confirmedCSV: string, deathsCSV: string) {
 	const result: Country[] = [];
 	const confirmedLines = confirmedCSV.split('\n');
-	const recoveredLines = recoveredCSV.split('\n');
 	const deathsLines = deathsCSV.split('\n');
 	const headlines = confirmedLines[0].split(',')
 
 	// Province/State	Country/Region	Lat	Long	1/22/20	1/23/20	1/24/20	1/25/20
 	for(let i = 1; i < confirmedLines.length; i++){
 		const confirmedCurrentLine = confirmedLines[i].split(',');
-		const recoveredCurrentLine = recoveredLines[i].split(',');
 		const deathsCurrentLine = deathsLines[i].split(',');
 		if (confirmedCurrentLine.length < 5) {
 			continue;
@@ -38,7 +35,6 @@ export function csvToJson(confirmedCSV: string, recoveredCSV: string, deathsCSV:
 			countryData.data.push({
 				date: new Date(headlines[column]),
 				confirmed: parseInt(confirmedCurrentLine[column] || '0'),
-				recovered: parseInt(recoveredCurrentLine[column] || '0'),
 				deaths: parseInt(deathsCurrentLine[column] || '0')
 			});
 		}
