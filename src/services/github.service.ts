@@ -25,7 +25,7 @@ export const fetchCsvs = () => fetch('https://api.github.com/repos/CSSEGISandDat
     .then(response => response.json())
     .then((files: GitHubFileDescription[]) => files
         .filter(file => file.name.endsWith('.csv'))
-        .filter(file => file.name.startsWith('time_series_covid19'))
+        .filter(file => file.name.startsWith('time_series_covid19') && csvOrder.some(csvName => file.name.includes(csvName)))
         .map(file => file.download_url)
         .sort((url1, url2) => getCsvOrderIndex(url1) - getCsvOrderIndex(url2))
     )
