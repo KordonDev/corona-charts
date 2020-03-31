@@ -8,20 +8,29 @@ export interface Country {
 export interface CountryData {
 	date: Date;
 	confirmed: number;
+	recovered: number;
 	deaths: number;
 }
 
 // http://techslides.com/convert-csv-to-json-in-javascript
-export function csvToJson(confirmedCSV: string, deathsCSV: string) {
+export function csvToJson(confirmedCSV: string, deathsCSV: string, recoveredCSV: string) {
 	const result: Country[] = [];
 	const confirmedLines = confirmedCSV.split('\n');
 	const deathsLines = deathsCSV.split('\n');
+	const recoveredLines = recoveredCSV.split('\n');
 	const headlines = confirmedLines[0].split(',')
 
 	// Province/State	Country/Region	Lat	Long	1/22/20	1/23/20	1/24/20	1/25/20
 	for(let i = 1; i < confirmedLines.length; i++){
 		const confirmedCurrentLine = confirmedLines[i].split(',');
-		const deathsCurrentLine = deathsLines[i].split(',');
+
+		const countryDescription = `${confirmedCurrentLine[0]},${confirmedCurrentLine[1]}`;
+
+		const deathsSameCountry = deathsLines.find(deathsLine => deathsLine.startsWith(countryDescription));
+		const recoveredSameCountry = recoveredLines.find(recoveredLine => recoveredLine.startsWith(countryDescription));
+
+		const deathsCurrentLine = deathsSameCountry ? deathsSameCountry.split(',') : [];
+		const recoveredCurrentLine = recoveredSameCountry ? recoveredSameCountry.split(',') : [];
 		if (confirmedCurrentLine.length < 5) {
 			continue;
 		}
@@ -35,6 +44,7 @@ export function csvToJson(confirmedCSV: string, deathsCSV: string) {
 			countryData.data.push({
 				date: new Date(headlines[column]),
 				confirmed: parseInt(confirmedCurrentLine[column] || '0'),
+				recovered: parseInt(recoveredCurrentLine[column] || '0'),
 				deaths: parseInt(deathsCurrentLine[column] || '0')
 			});
 		}
@@ -51,6 +61,7 @@ export function csvToJson(confirmedCSV: string, deathsCSV: string) {
 						data: country.data.map(day => ({
 							...day,
 							confirmed: day.confirmed + (currentCountry.data.find(currentCountryDay => currentCountryDay.date === day.date)?.confirmed || 0),
+							recovered: day.recovered + (currentCountry.data.find(currentCountryDay => currentCountryDay.date === day.date)?.recovered || 0),
 							deaths: day.deaths + (currentCountry.data.find(currentCountryDay => currentCountryDay.date === day.date)?.deaths || 0),
 						}))
 					}

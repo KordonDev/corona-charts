@@ -10,17 +10,15 @@ const deathsDataMapper = (data: CountryData[]) => data.map(day => day.deaths)
 const confirmedRelativeDataMapper = (data: CountryData[]) => confirmedDataMapper(data).map(toRelativeData);
 const deathsRelativeDataMapper = (data: CountryData[]) => deathsDataMapper(data).map(toRelativeData);
 
-const activeDays = 21;
-const activeDataMapper = (data: CountryData[]) => confirmedDataMapper(data).map(toActiveCases);
+const activeDataMapper = (data: CountryData[]) => data.map((day: CountryData) => day.confirmed - day.recovered);
 
-const toActiveCases = (confirmed: number, index: number, confirmedCases: number[]) => index - activeDays < 0 ? confirmed : confirmed - confirmedCases[index - activeDays];
 const toRelativeData = (currentCases: number, index: number, cases: number[]) => {
     if (index === 0 || cases[index - 1] === 0) return 1;
     return Math.round(currentCases / cases[index - 1] * 1000)/1000;
 };
 
 fetchCsvs()
-    .then(({ confirmedCsv, deathsCsv }) => csvToJson(confirmedCsv, deathsCsv))
+    .then(({ confirmedCsv, deathsCsv, recoveredCsv }) => csvToJson(confirmedCsv, deathsCsv, recoveredCsv))
     .then(countriesData => {
         const top20ConfirmedCountries = countriesData
             .sort((country1, country2) => country1.data[country1.data.length - 1].confirmed - country2.data[country2.data.length - 1].confirmed)
