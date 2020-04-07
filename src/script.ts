@@ -16,11 +16,17 @@ const toRelativeData = (currentCases: number, index: number, cases: number[]) =>
     if (index === 0 || cases[index - 1] === 0) return 1;
     return Math.round(currentCases / cases[index - 1] * 1000)/1000;
 };
+const lastInteresstingDate = new Date();
+lastInteresstingDate.setMonth(lastInteresstingDate.getMonth() - 2);
 
 fetchCsvs()
     .then(({ confirmedCsv, deathsCsv, recoveredCsv }) => csvToJson(confirmedCsv, deathsCsv, recoveredCsv))
     .then(countriesData => {
         const top20ConfirmedCountries = countriesData
+            .map(country => ({
+                ...country,
+                data: country.data.filter(day => day.date > lastInteresstingDate)
+            }))
             .sort((country1, country2) => country1.data[country1.data.length - 1].confirmed - country2.data[country2.data.length - 1].confirmed)
             .slice(-20)
 
