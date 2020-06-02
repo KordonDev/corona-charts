@@ -12,6 +12,12 @@ const deathsRelativeDataMapper = (data: CountryData[]) => deathsDataMapper(data)
 
 const activeDataMapper = (data: CountryData[]) => data.map((day: CountryData) => day.confirmed - day.recovered);
 
+const newCasesDataMapper = (data: CountryData[]) => confirmedDataMapper(data).map(toNewCases);
+
+const toNewCases = (currentCases: number, index: number, cases: number[]) => {
+    if (index === 0 || cases[index - 1] === 0) return 0;
+    return currentCases - cases[index - 1];
+}
 const toRelativeData = (currentCases: number, index: number, cases: number[]) => {
     if (index === 0 || cases[index - 1] === 0) return 1;
     return Math.round(currentCases / cases[index - 1] * 1000)/1000;
@@ -42,4 +48,7 @@ fetchCsvs()
 
         createChart('Active Cases', top20ConfirmedCountries, activeDataMapper, document.getElementById('active-cases-desktop'));
         createChart('Active Cases', top20ConfirmedCountries, activeDataMapper, document.getElementById('active-cases-mobile'));
+
+        createChart('New Daily Cases', top20ConfirmedCountries, newCasesDataMapper, document.getElementById('new-daily-cases-desktop'));
+        createChart('New Daily Cases', top20ConfirmedCountries, newCasesDataMapper, document.getElementById('new-daily-cases-mobile'));
     });
